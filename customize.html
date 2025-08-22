@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customize Your Order - Fresh Greens and Sips</title>
+  <link rel="stylesheet" href="customize.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <img src="images/LOGO1.jpg" alt="Fresh Greens and Sips Logo" class="logo-img">
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
+        <li><a href="customize.html" class="active"><i class="fas fa-edit"></i> Customize</a></li>
+        <li><a href="delivery.html"><i class="fas fa-truck"></i> Delivery</a></li>
+        <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+        <li><a href="help.html"><i class="fas fa-question-circle"></i> Help</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="customize-box glass-effect">
+    <h1>Customize Your Salad & Drink</h1>
+    
+    <form id="customForm">
+      <fieldset>
+        <legend><i class="fas fa-leaf"></i> Salad Ingredients</legend>
+        <div class="ingredient-grid">
+          <label><input type="checkbox" value="Lettuce" data-cal="5" data-pro="0.5" data-fib="1"><i class="fas fa-seedling"></i> Lettuce</label>
+          <label><input type="checkbox" value="Tomato" data-cal="10" data-pro="1" data-fib="1.5"><i class="fas fa-apple-alt"></i> Tomato</label>
+          <label><input type="checkbox" value="Cucumber" data-cal="8" data-pro="0.3" data-fib="0.5"><i class="fas fa-carrot"></i> Cucumber</label>
+          <label><input type="checkbox" value="Cheese" data-cal="80" data-pro="5" data-fib="0"><i class="fas fa-cheese"></i> Cheese</label>
+          <label><input type="checkbox" value="Chicken" data-cal="120" data-pro="20" data-fib="0"><i class="fas fa-drumstick-bite"></i> Chicken</label>
+          <label><input type="checkbox" value="Olives" data-cal="25" data-pro="0.3" data-fib="0.8"><i class="fas fa-circle"></i> Olives</label>
+          <label><input type="checkbox" value="Avocado" data-cal="160" data-pro="2" data-fib="7"><i class="fas fa-egg"></i> Avocado</label>
+          <label><input type="checkbox" value="Nuts" data-cal="180" data-pro="6" data-fib="3"><i class="fas fa-cookie"></i> Mixed Nuts</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><i class="fas fa-glass-martini-alt"></i> Drink Add-ins</legend>
+        <div class="ingredient-grid">
+          <label><input type="checkbox" value="Protein Powder" data-cal="100" data-pro="15" data-fib="0"><i class="fas fa-dumbbell"></i> Protein Powder</label>
+          <label><input type="checkbox" value="Chia Seeds" data-cal="60" data-pro="2" data-fib="4"><i class="fas fa-seedling"></i> Chia Seeds</label>
+          <label><input type="checkbox" value="Mint" data-cal="2" data-pro="0.1" data-fib="0.3"><i class="fas fa-leaf"></i> Mint</label>
+          <label><input type="checkbox" value="Ginger" data-cal="5" data-pro="0.2" data-fib="0.4"><i class="fas fa-pepper-hot"></i> Ginger</label>
+          <label><input type="checkbox" value="Honey" data-cal="60" data-pro="0" data-fib="0"><i class="fas fa-jar"></i> Honey</label>
+          <label><input type="checkbox" value="Lemon" data-cal="3" data-pro="0.1" data-fib="0.1"><i class="fas fa-lemon"></i> Lemon</label>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="nutrition">
+      <h2>Estimated Nutrition</h2>
+      <p id="calories">Calories: 0 kcal</p>
+      <p id="protein">Protein: 0 g</p>
+      <p id="fiber">Fiber: 0 g</p>
+    </div>
+
+    <!-- Delivery Button -->
+    <div class="delivery-button">
+      <a href="delivery.html">Order Delivery</a>
+      <a href="menu.html">Go to Menu</a>
+
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('customForm');
+    const calText = document.getElementById('calories');
+    const proText = document.getElementById('protein');
+    const fibText = document.getElementById('fiber');
+
+    form.addEventListener('change', () => {
+      let cal = 0, pro = 0, fib = 0;
+      form.querySelectorAll('input:checked').forEach(item => {
+        cal += +item.dataset.cal;
+        pro += +item.dataset.pro;
+        fib += +item.dataset.fib;
+      });
+      calText.textContent = `Calories: ${cal} kcal`;
+      proText.textContent = `Protein: ${pro} g`;
+      fibText.textContent = `Fiber: ${fib} g`;
+    });
+  </script>
+</body>
+</html>

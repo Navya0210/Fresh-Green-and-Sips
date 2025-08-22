@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Fresh Greens and Sips</title>
+    <link rel="stylesheet" href="payment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .confirmation-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .order-details {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .order-details h3 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .back-home {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .tracking-info {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(45, 143, 91, 0.2);
+            border-radius: 8px;
+        }
+
+        .tracking-info p {
+            margin: 0.5rem 0;
+        }
+
+        .tracking-number {
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: var(--success-color);
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="checkout-nav">
+        <a href="index.html" class="nav-logo">
+            <img src="images/LOGO1.jpg" alt="Fresh Greens and Sips Logo" height="40">
+        </a>
+        <div class="checkout-steps">
+            <span class="step completed"><i class="fas fa-shopping-cart"></i> Cart</span>
+            <span class="step completed"><i class="fas fa-credit-card"></i> Payment</span>
+            <span class="step active"><i class="fas fa-check-circle"></i> Confirmation</span>
+        </div>
+    </nav>
+
+    <main>
+        <div class="confirmation-container">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h1>Order Confirmed!</h1>
+            <p>Thank you for choosing Fresh Greens and Sips. Your order has been successfully placed.</p>
+
+            <div class="order-details">
+                <h3>Order Summary</h3>
+                <div id="order-items"></div>
+                <div class="detail-row">
+                    <span>Order Number:</span>
+                    <span id="order-number"></span>
+                </div>
+                <div class="detail-row">
+                    <span>Order Date:</span>
+                    <span id="order-date"></span>
+                </div>
+                <div class="detail-row">
+                    <span>Delivery Address:</span>
+                    <span id="delivery-address"></span>
+                </div>
+            </div>
+
+            <div class="tracking-info">
+                <h3>Track Your Order</h3>
+                <p>Your tracking number is:</p>
+                <p class="tracking-number" id="tracking-number"></p>
+                <p>You will receive an email with detailed tracking information shortly.</p>
+            </div>
+
+            <a href="index.html" class="back-home">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+    </main>
+
+    <script>
+        window.addEventListener('load', () => {
+            // Generate random order number
+            document.getElementById('order-number').textContent = '#' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+            // Set current date
+            const currentDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('order-date').textContent = currentDate;
+
+            // Generate random tracking number
+            document.getElementById('tracking-number').textContent = 'TRK' + Math.random().toString(36).substr(2, 8).toUpperCase();
+
+            // Display delivery address from form data
+            const formData = JSON.parse(localStorage.getItem('formData') || '{}');
+            if (formData.address) {
+                document.getElementById('delivery-address').textContent = formData.address;
+            }
+
+            // Display order items
+            const orderItems = document.getElementById('order-items');
+            const savedCart = localStorage.getItem('cart');
+
+            if (savedCart) {
+                const cart = JSON.parse(savedCart);
+                let total = 0;
+
+                cart.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'order-item';
+                    itemElement.innerHTML = `
+                        <div class="item-details">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-price">₹${item.price.toFixed(2)}</span>
+                        </div>
+                        <div class="item-ingredients">
+                            <small>${item.ingredients}</small>
+                        </div>
+                    `;
+                    orderItems.appendChild(itemElement);
+                    total += item.price;
+                });
+
+                document.getElementById('order-total').textContent = `₹${total.toFixed(2)}`;
+
+                // Clear cart and form data after displaying
+                localStorage.removeItem('cart');
+                localStorage.removeItem('formData');
+            }
+        });
+    </script>
+</body>
+</html>

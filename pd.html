@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment & Delivery - Fresh Greens and Sips</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2d8f5b;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .order-summary {
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+    }
+    .total {
+      font-weight: bold;
+    }
+    .hidden {
+      display: none;
+    }
+    label {
+      display: block;
+      margin: 5px 0 2px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background: #2d8f5b;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #246f47;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Payment & Delivery Details</h2>
+
+    <div class="section">
+      <label for="deliveryMethod">Delivery Method</label>
+      <select id="deliveryMethod" onchange="toggleAddressFields()">
+        <option value="home">Home Delivery</option>
+        <option value="takeaway">Takeaway</option>
+      </select>
+
+      <div id="addressFields">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe" />
+
+        <label>Street Address</label>
+        <input type="text" placeholder="123 Main St" />
+
+        <label>City</label>
+        <input type="text" placeholder="City" />
+
+        <label>ZIP Code</label>
+        <input type="text" placeholder="ZIP" />
+
+        <label>Contact Number</label>
+        <input type="text" placeholder="9876543210" />
+      </div>
+
+      <div id="takeawayFields" class="hidden">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe" />
+
+        <label>Contact Number</label>
+        <input type="text" placeholder="9876543210" />
+
+        <label>Pickup Time</label>
+        <input type="time" />
+      </div>
+    </div>
+
+    <div class="section order-summary">
+      <h3>Your Order</h3>
+      <div id="orderItems"></div>
+      <div class="item total">Total: ₹<span id="totalPrice">0</span></div>
+    </div>
+
+    <div class="section">
+      <label>Payment Method</label>
+      <select>
+        <option>Credit/Debit Card</option>
+        <option>UPI / Mobile Wallet</option>
+        <option>Cash on Delivery</option>
+      </select>
+    </div>
+
+    <button onclick="placeOrder()">Place Order</button>
+  </div>
+
+  <script>
+    // Load cart items from localStorage
+    const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+    const orderItemsDiv = document.getElementById("orderItems");
+    const totalPriceSpan = document.getElementById("totalPrice");
+
+    let total = 0;
+    cartItems.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <span>${item.name} x${item.quantity}</span>
+        <span>₹${itemTotal}</span>
+      `;
+      orderItemsDiv.appendChild(div);
+    });
+
+    totalPriceSpan.textContent = total;
+
+    // Toggle address fields based on delivery method
+    function toggleAddressFields() {
+      const method = document.getElementById("deliveryMethod").value;
+      document.getElementById("addressFields").classList.toggle("hidden", method !== "home");
+      document.getElementById("takeawayFields").classList.toggle("hidden", method !== "takeaway");
+    }
+
+    function placeOrder() {
+      alert("Your order has been placed successfully!");
+      localStorage.removeItem("cartItems");
+    }
+  </script>
+</body>
+</html>

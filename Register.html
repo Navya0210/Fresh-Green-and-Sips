@@ -1,0 +1,66 @@
+ <!-- <?php
+if(isset(($_POST['submit']))){
+    $username =$_POST['username'];
+    $Email =$_POST['Email'];
+    $password =$_POST['password'];
+    $phonenumber =$_POST['phonenumber'];
+
+    $host = 'localhost';
+    $user = 'root';
+    $pass = '';
+    $dbname = 'salads-and-drinks';
+
+    $conn = mysqli_connect($host,$user,$pass,$dbname);
+
+    $sql = "INSERT INTO register(username,Email,password,phonenumber)values ('$username','$Email','$password','$phonenumber')";
+    mysqli_query($conn,$sql);
+}
+
+?>  -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registration Page</title>
+        <link rel="stylesheet" href="Register.css">
+    </head>
+     <body>
+         <div class="register-box">
+             <h2>Register</h2>
+             <form action="register.php" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="tel" name="phonenumber" placeholder="Phone number" required>
+                <button type="submit">Register</button>
+                <a href="login.html">Register</a>
+            </form>
+             <p>Already have an account? <a href="login.html">Go to Login</a></p>
+         </div>
+     </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="Register.css">
+</head>
+<body>
+    <div class="register-box">
+        <h2>Register Form</h2>
+        <form action="register.php" method="POST">
+            <input type="text" name="username" placeholder="Username" required><br><br>
+            <input type="email" name="email" placeholder="Email" required><br><br>
+            <input type="password" name="password" placeholder="Password" required><br><br>
+            <input type="text" name="phone" placeholder="Phone Number" required><br><br>
+            <button type="submit">Register</button>
+            <a href="login.html">Register</a>
+        </form>
+    </div>
+</body>
+</html>

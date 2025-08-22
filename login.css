@@ -1,0 +1,146 @@
+/* Reset Default Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body { 
+    background-image: url('images/Quinoa Salad .jpg');
+    background-size: cover;
+    background-position: center 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* Login Container */
+.login-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Heading */
+.login-container h1 {
+    margin-bottom: 30px;
+    font-size: 32px;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels & Inputs */
+.login-container label {
+    display: block;
+    text-align: left;
+    font-size: 16px;
+    margin: 15px 0 8px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.login-container input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.login-container input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Forgot Password */
+.forgot-password {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.forgot-password a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.forgot-password a:hover {
+    opacity: 1;
+    text-decoration: none;
+}
+
+/* Login Button */
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+}
+
+.login-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+}
+
+.login-container button a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+}
+
+/* Register Link */
+.register-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.register-text a {
+    text-decoration: none;
+    color: #28a745;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.register-text a:hover {
+    color: #218838;
+    text-decoration: none;
+}

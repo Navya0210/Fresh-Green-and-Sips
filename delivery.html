@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fresh Greens and Sips - Order</title>
+  <link rel="stylesheet" href="delivery.css" />
+  <script>
+    function toggleFields() {
+      const orderType = document.getElementById("order-type").value;
+      const deliveryFields = document.getElementById("delivery-details");
+      const pickupTime = document.getElementById("pickup-time");
+
+      if (orderType === "takeaway") {
+        deliveryFields.style.display = "none";
+        pickupTime.style.display = "block";
+      } else {
+        deliveryFields.style.display = "block";
+        pickupTime.style.display = "none";
+      }
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      window.location.href = "order-confirmation.html";
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Fresh Greens and Sips</h1>
+    <p>Healthy Salads & Drinks Delivered Fresh</p>
+  </header>
+
+  <main class="container">
+    <h2>Place Your Order</h2>
+
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="order-type">Choose Order Type:</label>
+        <select id="order-type" onchange="toggleFields()">
+          <option value="delivery">Home Delivery</option>
+          <option value="takeaway">Takeaway</option>
+        </select>
+      </div>
+
+      <div id="delivery-details">
+        <div class="form-group">
+          <label for="house">House No:</label>
+          <input type="text" id="house" placeholder="House No" required />
+        </div>
+
+        <div class="form-group">
+          <label for="area">Area:</label>
+          <input type="text" id="area" placeholder="Area" required />
+        </div>
+
+        <div class="form-group">
+          <label for="landmark">Landmark:</label>
+          <input type="text" id="landmark" placeholder="Landmark" />
+        </div>
+
+        <div class="form-group">
+          <label for="district">District:</label>
+          <input type="text" id="district" placeholder="District" required />
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number:</label>
+          <input type="tel" id="phoneNumber" placeholder="e.g. 1234567890" required />
+        </div>
+
+        <div class="form-group">
+          <label for="pincode">Pincode:</label>
+          <input type="text" id="pincode" placeholder="Pincode" required />
+        </div>
+      </div>
+
+      <div class="form-group" id="pickup-time" style="display: none;">
+        <label for="time">Pickup Time:</label>
+        <input type="time" id="time" />
+      </div>
+
+      <div class="form-group">
+        <label for="tracking">Tracking ID:</label>
+        <input type="text" id="tracking" placeholder="e.g. FG123456" />
+      </div>
+
+      <div class="form-group">
+        <label for="timing">Order Timing:</label>
+        <input type="datetime-local" id="timing" required />
+      </div>
+
+      <div class="form-group">
+        <button type="submit">Place Order</button>
+      </div>
+    </form>
+  </main>
+
+  <!-- <footer>
+    <p>Need Help? Email: <a href="mailto:support@freshgreensandsips.com">support@freshgreensandsips.com</a> | Call: +123-456-7890</p>
+  </footer> -->
+</body>
+</html>
+
+
+
+
+ 

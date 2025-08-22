@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment - Fresh Greens and Sips</title>
+    <link rel="stylesheet" href="payment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <nav class="checkout-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-logo">
+                <img src="images/LOGO1.jpg" alt="Fresh Greens and Sips Logo" height="40">
+            </a>
+            <div class="checkout-steps">
+                <a href="menu.html" class="step completed">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="step-text">Cart</span>
+                    <i class="fas fa-chevron-right step-arrow"></i>
+                </a>
+                <div class="step active">
+                    <i class="fas fa-credit-card"></i>
+                    <span class="step-text">Payment</span>
+                    <i class="fas fa-chevron-right step-arrow"></i>
+                </div>
+                <div class="step">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="step-text">Confirmation</span>
+                </div>
+            </div>
+            <div class="secure-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Secure Checkout</span>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1><i class="fas fa-lock"></i> Secure Checkout</h1>
+        <p>Complete your healthy food journey securely</p>
+    </header>
+
+    <main>
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div id="summary-items" class="summary-items">
+                <!-- Order items will be populated here -->
+            </div>
+            <div class="summary-total">
+                <span>Total Amount:</span>
+                <span id="summary-total-amount" class="total-amount">₹0.00</span>
+            </div>
+        </div>
+        <script>
+        window.addEventListener('load', () => {
+            const summaryItems = document.getElementById('summary-items');
+            const summaryTotal = document.getElementById('summary-total-amount');
+            const savedCart = localStorage.getItem('cart');
+
+            if (savedCart) {
+                const cart = JSON.parse(savedCart);
+                let total = 0;
+
+                cart.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'summary-item';
+                    itemElement.innerHTML = `
+                        <div class="item-details">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-price">₹${item.price.toFixed(2)}</span>
+                        </div>
+                        <div class="item-ingredients">
+                            <small>${item.ingredients}</small>
+                        </div>
+                    `;
+                    summaryItems.appendChild(itemElement);
+                    total += item.price;
+                });
+
+                summaryTotal.textContent = `₹${total.toFixed(2)}`;
+
+                // Store order total in hidden input for payment processing
+                const orderTotalInput = document.createElement('input');
+                orderTotalInput.type = 'hidden';
+                orderTotalInput.name = 'order_total';
+                orderTotalInput.value = total.toFixed(2);
+                document.querySelector('form').appendChild(orderTotalInput);
+            } else {
+                summaryItems.innerHTML = '<p class="empty-cart">Your cart is empty. Please add items from the menu.</p>';
+                document.querySelector('button[type="submit"]').disabled = true;
+            }
+        });
+        </script>
+
+        <section class="payment-methods">
+            <div class="payment-container">
+                <div class="payment-header">
+                    <h2><i class="fas fa-credit-card"></i> Payment Information</h2>
+                    <div class="security-badges">
+                        <span><i class="fas fa-lock"></i> SSL Encrypted</span>
+                        <span><i class="fas fa-shield-alt"></i> Secure Payment</span>
+                        <span><i class="fas fa-clock"></i> 24/7 Support</span>
+                    </div>
+                </div>
+                <div class="accepted-payments">
+                    <span>We Accept:</span>
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-discover"></i>
+                </div>
+                <form id="payment-form" action="process_payment.php" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                        <i class="fas fa-user"></i>
+                        <div class="error-message"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                        <i class="fas fa-envelope"></i>
+                        <div class="error-message"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                        <i class="fas fa-phone"></i>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Delivery Address</label>
+                        <input type="text" id="address" name="address" required>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="error-message"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="card-element">
+                        <i class="fas fa-credit-card"></i>
+                        Credit Card Information
+                    </label>
+                    <div id="card-element" class="stripe-element"></div>
+                    <div id="card-errors" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="payment-footer">
+                    <div class="accepted-payments">
+                        <span>We Accept:</span>
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-discover"></i>
+                    </div>
+                    <button type="submit" class="pay-button">
+                        <span class="button-text">Pay Securely Now</span>
+                        <span class="button-loader hidden"></span>
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="js/payment.js"></script>
+</body>
+</html>
+
+
+
